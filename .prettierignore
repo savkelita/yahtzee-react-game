@@ -1,0 +1,4 @@
+*.json
+.babelrc
+.prettierrc
+/node_modules/

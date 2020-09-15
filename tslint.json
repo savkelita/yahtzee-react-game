@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "tslint-config-standard",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  },
+  "rules": {
+    "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"],
+    "quotemark": [
+      true,
+      "single",
+      "avoid-template",
+      "avoid-escape",
+      "jsx-double"
+    ],
+    "ordered-imports": [true, { "named-imports-order": "any" }],
+    "object-literal-shorthand": true,
+    "arrow-return-shorthand": true
+  }
+}

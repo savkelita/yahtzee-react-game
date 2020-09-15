@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+      "eamodio.gitlens",
+      "ms-vscode.vscode-typescript-tslint-plugin",
+      "esbenp.prettier-vscode",
+      "darkriszty.markdown-table-prettify",
+      "bradgashler.htmltagwrap",
+      "coenraads.bracket-pair-colorizer",
+      "msjsdiag.debugger-for-chrome",
+      "pkief.material-icon-theme",
+      "zhuangtongfa.material-theme"
+    ]
+  }
+  
