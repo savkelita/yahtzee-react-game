@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+button { border: 0px; }
+button:focus { outline: 0; }
+
+/* Dice Styles */
+.dice {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    background-color: #FFF;
+}
+  
+.dice-none {
+    color: #333;
+}
+  
+.dice-selected {
+    color: #CB2200;
+}
+
+.btn-default {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.btn-default:disabled, .btn-default[disabled] {
+    cursor: not-allowed;
+}
+
+.btn-default:hover {
+    background-color: #ddd;
+}
