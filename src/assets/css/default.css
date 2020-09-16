@@ -1,41 +1,55 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
-button { border: 0px; }
-button:focus { outline: 0; }
+button {
+  border: 0px;
+}
+button:focus {
+  outline: 0!important;
+}
 
 /* Dice Styles */
 .dice {
-    width: 50px;
-    height: 50px;
-    border-radius: 10%;
-    background-color: #FFF;
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  background-color: #fff;
 }
-  
+
 .dice-none {
-    color: #333;
+  color: #333;
 }
-  
+
 .dice-selected {
-    color: #CB2200;
+  color: #cb2200;
 }
 
-.btn-default {
-    border-radius: 5px;
-    padding: 10px;
+/* Ticket Styles */
+table,
+thead,
+tr,
+tbody,
+th,
+td {
+  text-align: center;
 }
 
-.btn-default:disabled, .btn-default[disabled] {
-    cursor: not-allowed;
+td:hover {
+  background-color: #eaeaea;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.btn-default:hover {
-    background-color: #ddd;
+.table td {
+  text-align: center;
+}
+
+.selected {
+  background-color: #eaeaea;
 }
