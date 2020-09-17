@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { Dice, initialDice } from '../game/components/dice'
-import { gameColumnsInitial, gameRowsInitial, columnStyle, Column, RowValue } from '../game/components/ticket'
+import {
+  gameColumnsInitial,
+  gameRowsInitial as gameRow,
+  columnStyle,
+  Column,
+  RowValue,
+} from '../game/components/ticket'
 
 export const App = () => {
   const [roll, setRoll] = useState(1)
   const [dice, setDice] = useState(initialDice())
-  const [gameRow] = useState(gameRowsInitial)
   const [gameColumn, setGameColumn] = useState(gameColumnsInitial())
-  const [log, setLog] = useState<Array<string>>([])
 
   const selectDice = (index: number) => {
     if (roll !== 1) {
@@ -21,9 +25,6 @@ export const App = () => {
   }
 
   const selectCell = (row: RowValue, rowIndex: number, column: Column) => {
-    const clickLogMsg = `Row: ${row.name}, Column: ${column}`
-    setLog([...log, clickLogMsg])
-
     switch (row.name) {
       case '1':
       case '2':
@@ -33,16 +34,12 @@ export const App = () => {
       case '6': {
         switch (column) {
           case 'down': {
-            if (gameColumn[column][rowIndex].value === null) {
-              setRoll(1)
-              setDice(dice.map((x) => ({ ...x, selected: false })))
-              setGameColumn({
-                ...gameColumn,
-                down: gameColumn[column].map((x) =>
-                  x.name === gameColumn[column][rowIndex].name ? { ...x, value: 10 } : x,
-                ),
-              })
-            }
+            setRoll(1)
+            setDice(dice.map((x) => ({ ...x, selected: false })))
+            setGameColumn({
+              ...gameColumn,
+              [column]: gameColumn[column].map((x, i) => (i === rowIndex ? { ...x, value: 10 } : x)),
+            })
             break
           }
           default:
@@ -55,88 +52,72 @@ export const App = () => {
 
   return (
     <div className="App">
-      <div className="container" style={{ marginTop: 10 }}>
-        <div className="row">
-          <div className="col-md-5">
-            <div style={{ display: 'flex', flexDirection: 'column', width: 400 }}>
-              <table className="table table-bordered">
-                <thead>
-                  <tr style={{ backgroundColor: '#4267b2', color: '#FFF' }}>
-                    <th className="col-sm-2">
-                      <i className="fas fa-dice fa-2x" />
-                    </th>
-                    {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
-                      <th key={columnIndex} className="col-sm-2">
-                        {columnStyle(column)}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {gameRow.map((row, rowIndex) => (
-                    <tr
-                      style={
-                        row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                          ? { backgroundColor: '#4267b2', color: '#FFF' }
-                          : undefined
-                      }
-                      key={rowIndex}
-                    >
-                      <th>
-                        {row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                          ? 'Σ'
-                          : row.name.toUpperCase()}
-                      </th>
-                      {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
-                        <td
-                          key={columnIndex}
-                          style={
-                            row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                              ? { backgroundColor: '#EAEAEA', color: '#333', fontWeight: 'bold' }
-                              : undefined
-                          }
-                          className={`${column === 'call' && gameColumn[column][columnIndex].call ? 'selected' : ''}`}
-                          // tslint:disable-next-line: jsx-no-lambda
-                          onClick={() => selectCell(row, rowIndex, column)}
-                        >
-                          {gameColumn[column][columnIndex].value}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                {dice.map((d, i) => (
-                  <Dice
-                    key={i}
-                    value={d}
-                    // tslint:disable-next-line: jsx-no-lambda
-                    onClick={() => selectDice(i)}
-                  />
-                ))}
-              </div>
-              <button
-                // tslint:disable-next-line: jsx-no-lambda
-                onClick={() => rollDice()}
-                className="btn btn-default btn-block"
-                disabled={roll > 3}
+      <div style={{ display: 'flex', flexDirection: 'column', width: 400 }}>
+        <table className="table table-bordered">
+          <thead>
+            <tr style={{ backgroundColor: '#4267b2', color: '#FFF' }}>
+              <th className="col-sm-2">
+                <i className="fas fa-dice fa-2x" />
+              </th>
+              {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
+                <th key={columnIndex} className="col-sm-2">
+                  {columnStyle(column)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {gameRow.map((row, rowIndex) => (
+              <tr
+                style={
+                  row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
+                    ? { backgroundColor: '#4267b2', color: '#FFF' }
+                    : undefined
+                }
+                key={rowIndex}
               >
-                Roll {`${roll > 3 ? '' : roll}`}
-              </button>
-            </div>
-          </div>
-          <div className="col-md-7">
-            <pre style={{ overflow: 'auto', height: 250, borderRadius: 0 }}>{JSON.stringify(log, null, 2)}</pre>
-            <button
+                <th>
+                  {row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
+                    ? 'Σ'
+                    : row.name.toUpperCase()}
+                </th>
+                {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
+                  <td
+                    key={columnIndex}
+                    style={
+                      row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
+                        ? { backgroundColor: '#EAEAEA', color: '#333', fontWeight: 'bold' }
+                        : undefined
+                    }
+                    className={`${column === 'call' && gameColumn[column][columnIndex].call ? 'selected' : ''}`}
+                    // tslint:disable-next-line: jsx-no-lambda
+                    onClick={() => selectCell(row, rowIndex, column)}
+                  >
+                    {gameColumn[column][rowIndex].value}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+          {dice.map((d, i) => (
+            <Dice
+              key={i}
+              value={d}
               // tslint:disable-next-line: jsx-no-lambda
-              onClick={() => setLog([])}
-              className="btn btn-default"
-            >
-              Clear Log
-            </button>
-          </div>
+              onClick={() => selectDice(i)}
+            />
+          ))}
         </div>
+        <button
+          // tslint:disable-next-line: jsx-no-lambda
+          onClick={() => rollDice()}
+          className="btn btn-default btn-block"
+          disabled={roll > 3}
+        >
+          Roll {`${roll > 3 ? '' : roll}`}
+        </button>
       </div>
     </div>
   )

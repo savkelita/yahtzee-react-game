@@ -19,9 +19,8 @@ type Row =
   | 'yamb'
   | 'sumdown'
 
-export type RowValue = { name: Row; value?: number | null; call?: boolean }
-type GameRow = Array<RowValue>
-export const gameRowsInitial: GameRow = [
+export type RowValue = { name: Row }
+export const gameRowsInitial: Array<RowValue> = [
   { name: '1' },
   { name: '2' },
   { name: '3' },
@@ -40,16 +39,15 @@ export const gameRowsInitial: GameRow = [
   { name: 'sumdown' },
 ]
 
-export const gameColumnsInitial = (): { [key in Column]: GameRow } => {
-  const gameRows = gameRowsInitial.map((x) => ({ ...x, value: null }))
+export type ColumnValue = { value: null | number; call?: boolean }
+export const gameColumnsInitial = (): { [key in Column]: Array<ColumnValue> } => {
+  const columns = gameRowsInitial.map((_) => ({ value: null }))
   return {
-    down: gameRows,
-    free: gameRows,
-    up: gameRows,
-    hand: gameRows,
-    call: gameRows.map((x) =>
-      x.name === 'sumupper' || x.name === 'summaxmin' || x.name === 'sumdown' ? x : { ...x, call: false },
-    ),
+    down: columns,
+    free: columns,
+    up: columns,
+    hand: columns,
+    call: columns.map((x) => ({ ...x, call: false })),
   }
 }
 
