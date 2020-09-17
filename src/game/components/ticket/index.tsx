@@ -19,37 +19,39 @@ type Row =
   | 'yamb'
   | 'sumdown'
 
-type GameRow = Array<{ name: Row; value: number | null; call?: boolean }>
+export type RowValue = { name: Row; value?: number | null; call?: boolean }
+type GameRow = Array<RowValue>
 export const gameRowsInitial: GameRow = [
-  { name: '1', value: null },
-  { name: '2', value: null },
-  { name: '3', value: null },
-  { name: '4', value: null },
-  { name: '5', value: null },
-  { name: '6', value: null },
-  { name: 'sumupper', value: 0 },
-  { name: 'max', value: null },
-  { name: 'min', value: null },
-  { name: 'summaxmin', value: 0 },
-  { name: 'kenta', value: null },
-  { name: 'triling', value: null },
-  { name: 'ful', value: null },
-  { name: 'poker', value: null },
-  { name: 'yamb', value: null },
-  { name: 'sumdown', value: 0 },
+  { name: '1' },
+  { name: '2' },
+  { name: '3' },
+  { name: '4' },
+  { name: '5' },
+  { name: '6' },
+  { name: 'sumupper' },
+  { name: 'max' },
+  { name: 'min' },
+  { name: 'summaxmin' },
+  { name: 'kenta' },
+  { name: 'triling' },
+  { name: 'ful' },
+  { name: 'poker' },
+  { name: 'yamb' },
+  { name: 'sumdown' },
 ]
 
-export const gameColumns: { [key in Column]: GameRow } = {
-  down: gameRowsInitial,
-  free: gameRowsInitial,
-  up: gameRowsInitial,
-  hand: gameRowsInitial,
-  call: gameRowsInitial.map((x) =>
-    x.name === 'sumupper' || x.name === 'summaxmin' || x.name === 'sumdown' ? x : { ...x, call: false },
-  ),
+export const gameColumnsInitial = (): { [key in Column]: GameRow } => {
+  const gameRows = gameRowsInitial.map((x) => ({ ...x, value: null }))
+  return {
+    down: gameRows,
+    free: gameRows,
+    up: gameRows,
+    hand: gameRows,
+    call: gameRows.map((x) =>
+      x.name === 'sumupper' || x.name === 'summaxmin' || x.name === 'sumdown' ? x : { ...x, call: false },
+    ),
+  }
 }
-
-export const sumStyle = 'Σ'
 
 export const columnStyle = (column: Column): JSX.Element => {
   switch (column) {
