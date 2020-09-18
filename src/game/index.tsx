@@ -25,6 +25,7 @@ export const App = () => {
   }
 
   const selectCell = (row: RowValue, rowIndex: number, column: Column) => {
+    if (roll === 1) return
     switch (row.name) {
       case '1':
       case '2':
@@ -34,12 +35,39 @@ export const App = () => {
       case '6': {
         switch (column) {
           case 'down': {
-            setRoll(1)
-            setDice(dice.map((x) => ({ ...x, selected: false })))
-            setGameColumn({
-              ...gameColumn,
-              [column]: gameColumn[column].map((x, i) => (i === rowIndex ? { ...x, value: 10 } : x)),
-            })
+            if (
+              (gameColumn[column][0].value === null && rowIndex === 0) ||
+              (rowIndex > 0 && gameColumn[column][rowIndex - 1].value !== null)
+            ) {
+              setRoll(1)
+              setDice(dice.map((x) => ({ ...x, selected: false })))
+              setGameColumn({
+                ...gameColumn,
+                [column]: gameColumn[column].map((x, i) => (i === rowIndex ? { ...x, value: 10 } : x)),
+              })
+            }
+            break
+          }
+          case 'free': {
+            if (gameColumn[column][rowIndex].value === null) {
+              setRoll(1)
+              setDice(dice.map((x) => ({ ...x, selected: false })))
+              setGameColumn({
+                ...gameColumn,
+                [column]: gameColumn[column].map((x, i) => (i === rowIndex ? { ...x, value: 10 } : x)),
+              })
+            }
+            break
+          }
+          case 'hand': {
+            if (roll > 1) {
+              setRoll(1)
+              setDice(dice.map((x) => ({ ...x, selected: false })))
+              setGameColumn({
+                ...gameColumn,
+                [column]: gameColumn[column].map((x, i) => (i === rowIndex ? { ...x, value: 10 } : x)),
+              })
+            }
             break
           }
           default:
