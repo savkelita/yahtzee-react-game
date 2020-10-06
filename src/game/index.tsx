@@ -7,6 +7,7 @@ import {
   Column,
   RowValue,
 } from '../game/components/ticket'
+import { fullHouse } from './helpers/'
 
 export const App = () => {
   const [roll, setRoll] = useState(1)
@@ -74,6 +75,15 @@ export const App = () => {
         }
         break
       }
+      case 'ful': {
+        switch (column) {
+          case 'free': {
+            console.log(fullHouse(dice))
+            break
+          }
+        }
+        break
+      }
       default:
     }
   }
@@ -81,53 +91,52 @@ export const App = () => {
   return (
     <div className="App">
       <div style={{ display: 'flex', flexDirection: 'column', width: 400 }}>
-        <table className="table table-bordered">
-          <thead>
-            <tr style={{ backgroundColor: '#4267b2', color: '#FFF' }}>
-              <th className="col-sm-2">
-                <i className="fas fa-dice fa-2x" />
-              </th>
-              {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
-                <th key={columnIndex} className="col-sm-2">
-                  {columnStyle(column)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {gameRow.map((row, rowIndex) => (
-              <tr
-                style={
-                  row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                    ? { backgroundColor: '#4267b2', color: '#FFF' }
-                    : undefined
-                }
+        <div style={{ display: 'flex' }}>
+          <div
+            style={{
+              display: 'flex',
+              width: 100,
+              height: 30,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <i className="fas fa-dice fa-2x" />
+          </div>
+          {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
+            <div className="cell" key={columnIndex}>
+              {columnStyle(column)}
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {gameRow.map((row, rowIndex) => (
+            <div key={rowIndex} style={{ display: 'flex' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  width: 100,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
                 key={rowIndex}
               >
-                <th>
-                  {row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                    ? 'Σ'
-                    : row.name.toUpperCase()}
-                </th>
-                {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
-                  <td
-                    key={columnIndex}
-                    style={
-                      row.name === 'sumupper' || row.name === 'sumdown' || row.name === 'summaxmin'
-                        ? { backgroundColor: '#EAEAEA', color: '#333', fontWeight: 'bold' }
-                        : undefined
-                    }
-                    className={`${column === 'call' && gameColumn[column][columnIndex].call ? 'selected' : ''}`}
-                    // tslint:disable-next-line: jsx-no-lambda
-                    onClick={() => selectCell(row, rowIndex, column)}
-                  >
-                    {gameColumn[column][rowIndex].value}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                {row.name.toUpperCase()}
+              </div>
+              {(Object.keys(gameColumn) as Array<Column>).map((column, columnIndex) => (
+                <button
+                  key={columnIndex}
+                  className="btn cell"
+                  // tslint:disable-next-line: jsx-no-lambda
+                  onClick={() => selectCell(row, rowIndex, column)}
+                >
+                  {gameColumn[column][rowIndex].value}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
           {dice.map((d, i) => (
             <Dice

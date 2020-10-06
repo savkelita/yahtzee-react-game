@@ -1,6 +1,6 @@
 import React from 'react'
 
-type DiceValue = { value: number; selected: boolean }
+export type DiceValue = { value: number; selected: boolean }
 
 export const initialDice = (): Array<DiceValue> => {
   const dice = []
