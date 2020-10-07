@@ -7,7 +7,7 @@ import {
   Column,
   RowValue,
 } from '../game/components/ticket'
-import { fullHouse } from './helpers/'
+import { straight, full, trilling, poker, yamb } from './helpers/'
 
 export const App = () => {
   const [roll, setRoll] = useState(1)
@@ -61,7 +61,7 @@ export const App = () => {
             break
           }
           case 'hand': {
-            if (roll > 1) {
+            if (roll === 2 && gameColumn[column][rowIndex].value === null) {
               setRoll(1)
               setDice(dice.map((x) => ({ ...x, selected: false })))
               setGameColumn({
@@ -72,15 +72,6 @@ export const App = () => {
             break
           }
           default:
-        }
-        break
-      }
-      case 'ful': {
-        switch (column) {
-          case 'free': {
-            console.log(fullHouse(dice))
-            break
-          }
         }
         break
       }

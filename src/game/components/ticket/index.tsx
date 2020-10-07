@@ -12,9 +12,9 @@ type Row =
   | 'max'
   | 'min'
   | 'summaxmin'
-  | 'kenta'
-  | 'triling'
-  | 'ful'
+  | 'straight'
+  | 'trilling'
+  | 'full'
   | 'poker'
   | 'yamb'
   | 'sumdown'
@@ -31,9 +31,9 @@ export const gameRowsInitial: Array<RowValue> = [
   { name: 'max' },
   { name: 'min' },
   { name: 'summaxmin' },
-  { name: 'kenta' },
-  { name: 'triling' },
-  { name: 'ful' },
+  { name: 'straight' },
+  { name: 'trilling' },
+  { name: 'full' },
   { name: 'poker' },
   { name: 'yamb' },
   { name: 'sumdown' },
