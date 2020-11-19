@@ -12,44 +12,44 @@ type Row =
   | 'max'
   | 'min'
   | 'summaxmin'
-  | 'kenta'
-  | 'triling'
-  | 'ful'
+  | 'straight'
+  | 'trilling'
+  | 'full'
   | 'poker'
   | 'yamb'
   | 'sumdown'
 
-type GameRow = Array<{ name: Row; value: number | null; call?: boolean }>
-export const gameRowsInitial: GameRow = [
-  { name: '1', value: null },
-  { name: '2', value: null },
-  { name: '3', value: null },
-  { name: '4', value: null },
-  { name: '5', value: null },
-  { name: '6', value: null },
-  { name: 'sumupper', value: 0 },
-  { name: 'max', value: null },
-  { name: 'min', value: null },
-  { name: 'summaxmin', value: 0 },
-  { name: 'kenta', value: null },
-  { name: 'triling', value: null },
-  { name: 'ful', value: null },
-  { name: 'poker', value: null },
-  { name: 'yamb', value: null },
-  { name: 'sumdown', value: 0 },
+export type RowValue = { name: Row }
+export const gameRowsInitial: Array<RowValue> = [
+  { name: '1' },
+  { name: '2' },
+  { name: '3' },
+  { name: '4' },
+  { name: '5' },
+  { name: '6' },
+  { name: 'sumupper' },
+  { name: 'max' },
+  { name: 'min' },
+  { name: 'summaxmin' },
+  { name: 'straight' },
+  { name: 'trilling' },
+  { name: 'full' },
+  { name: 'poker' },
+  { name: 'yamb' },
+  { name: 'sumdown' },
 ]
 
-export const gameColumns: { [key in Column]: GameRow } = {
-  down: gameRowsInitial,
-  free: gameRowsInitial,
-  up: gameRowsInitial,
-  hand: gameRowsInitial,
-  call: gameRowsInitial.map((x) =>
-    x.name === 'sumupper' || x.name === 'summaxmin' || x.name === 'sumdown' ? x : { ...x, call: false },
-  ),
+export type ColumnValue = { value: null | number; call?: boolean }
+export const gameColumnsInitial = (): { [key in Column]: Array<ColumnValue> } => {
+  const columns = gameRowsInitial.map((_) => ({ value: null }))
+  return {
+    down: columns,
+    free: columns,
+    up: columns,
+    hand: columns,
+    call: columns.map((x) => ({ ...x, call: false })),
+  }
 }
-
-export const sumStyle = 'Σ'
 
 export const columnStyle = (column: Column): JSX.Element => {
   switch (column) {

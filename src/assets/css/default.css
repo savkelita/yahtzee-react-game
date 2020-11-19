@@ -3,14 +3,22 @@
   padding: 0;
 }
 
+.App {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
+  height: 100vh;
 }
 
 button {
   border: 0px;
 }
+
 button:focus {
   outline: 0!important;
 }
@@ -31,25 +39,14 @@ button:focus {
   color: #cb2200;
 }
 
-/* Ticket Styles */
-table,
-thead,
-tr,
-tbody,
-th,
-td {
+.cell {
+  width: 50px;
+  height: 25px;
+  margin: 2px;
   text-align: center;
 }
 
-td:hover {
-  background-color: #eaeaea;
-  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.table td {
-  text-align: center;
-}
-
-.selected {
-  background-color: #eaeaea;
+.btn {
+  border-radius: 5px;
+  background-color: #ddd;
 }
